@@ -154,6 +154,9 @@
 
 				/* add "marker"s info to side_bar for easy browse-click */
 				document.getElementById("side_bar").innerHTML = side_bar_html;
+
+				/* update status div */
+				$('status').innerHTML = "";
 			}
 		}
 		/* send off AJAX request we've constructed */
