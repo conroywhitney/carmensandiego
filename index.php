@@ -1,3 +1,5 @@
+<?php require("image_dates.php"); ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -201,11 +203,11 @@
 
 	<script type="text/javascript" language="javascript">
 	// <![CDATA[
-		var num_dates = 10;
-		var dates = ['2007-10-24', '2007-10-25', '2007-10-26', '2007-10-27', '2007-10-28', '2007-10-29', '2007-10-30', '2007-10-31', '2007-11-01', '2007-11-02', '2007-11-03'];
+		var num_dates = <?php echo $num_dates; ?>;
+		var dates = <?php echo $dates_js; ?>;
 
 		var handles = [$('handle1'), $('handle2')];
-		var values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+		var values = <?php echo $values_count_js; ?>;
 
 		// horizontal slider control left
 		new Control.Slider(handles, 'track', 
