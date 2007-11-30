@@ -1,6 +1,8 @@
+<?php require("mysqlpass.php"); ?>
+
 <?php
 
-	$db = new mysqli("localhost", "root", "blackbag", "4440");
+	$db = new mysqli("localhost", "root", $mysql_password, "4440");
 	if(mysqli_connect_errno()) {
 		echo 'mysqli error';
 	}
