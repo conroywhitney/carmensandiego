@@ -1,4 +1,4 @@
-<?php require("mysqlpass.php"); ?>
+<?php require("ignore/mysqlpass.php"); ?>
 
 <markers>
 <?php
