@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>GATech CS4440 - Carmen Sandiego</title>
+    <title>Google Maps</title>
     <script src="http://maps.google.com/maps?file=api&v=1&key=ABQIAAAAIgEnb51u7ki0ktkbQ_DXtRQJKXadkVFadm4-UfJVkAKqFFfaphRfhRfd2EWZRN1_8j0YKTCATAcaZw" type="text/javascript">
     </script>
   </head>
@@ -20,6 +20,16 @@
       </tr>
 
     </table>
+
+
+	<!-- create start/end period for request -->
+	<div id="divTime">
+		<form action="NOACTION" method="get">
+			<label for="txtTimeStart">Start:</label>&nbsp;<input type="text" id="txtTimeStart" name="start" />&nbsp;-&nbsp;
+			<label for="txtTimeEnd">End:</label>&nbsp;<input type="text" id="txtTimeEnd" name="end" />
+			<input type="submit" value="Refresh" onclick="return refresh();" />
+		</form>
+	</div>
 
 
     <noscript><b>JavaScript must be enabled in order for you to use Google Maps.</b> 
@@ -44,7 +54,7 @@
 
       // A function to create the marker and set up the event window
       function createMarker(point,name,html) {
-        var marker = new GMarker(point, new GIcon(G_DEFAULT_ICON, "images/bluecircle.png"));
+        var marker = new GMarker(point, new GIcon(G_DEFAULT_ICON, "bluecircle.png"));
         GEvent.addListener(marker, "click", function() {
           marker.openInfoWindowHtml(html);
         });
@@ -82,7 +92,7 @@
 		var request = GXmlHttp.create();
 
 		/* construct URL we'll be pinging with zoom/start/end */
-		var url = "markers.php?start=" + start + "&end=" + end;
+		var url = "markers.php?zoom=" + zoom + "&start=" + start + "&end=" + end;
 
 		/* set HTTP-type, URL, ?something? of request */
 		request.open("GET", url, true);
