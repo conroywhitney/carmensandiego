@@ -16,8 +16,10 @@
 		while($row = $result->fetch_assoc()) {
 ?>
 			<marker lat="<?php echo $row['x']; ?>" lng="<?php echo $row['y']; ?>" 
-				html="<?php echo "Displaying ".$row['x'].", ".$row['y'] ?>"  
-				label="Marker (<?php echo $row['x'].", ".$row['y'] ?>)" />
+				html="Filename <?php echo $row['filename']; ?>
+					&lt;br&gt;Location: <?php echo $row['x']; ?>, <?php echo $row['y']; ?>
+					&lt;br&gt;Taken at: <?php echo $row['taken_at']; ?>"
+				label="<?php echo $row['filename']; ?>" />
 <?
 		}
 	}
