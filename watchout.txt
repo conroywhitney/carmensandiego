@@ -1,0 +1,3 @@
+center rings on the latlong -- google places their bottom at the latlong (pintpoints)
+
+remove bubble on refresh -- google keeps it popped up (does it change image???)

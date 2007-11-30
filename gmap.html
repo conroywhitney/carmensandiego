@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>GATech CS4440 - Carmen Sandiego</title>
+    <script src="http://maps.google.com/maps?file=api&v=1&key=ABQIAAAAIgEnb51u7ki0ktkbQ_DXtRQJKXadkVFadm4-UfJVkAKqFFfaphRfhRfd2EWZRN1_8j0YKTCATAcaZw" type="text/javascript">
+    </script>
+  </head>
+  <body onunload="GUnload()">
+
+    <!-- you can use tables or divs for the overall layout -->
+
+    <table border=1>
+      <tr>
+        <td>
+           <div id="map" style="width: 800px; height: 600px"></div>
+        </td>
+        <td width = 150 valign="top" style="text-decoration: underline; color: #4444ff;">
+           <div id="side_bar"></div>
+        </td>
+      </tr>
+
+    </table>
+
+
+	<!-- create start/end period for request -->
+	<div id="divTime">
+		<form action="NOACTION" method="get">
+			<label for="txtTimeStart">Start:</label>&nbsp;<input type="text" id="txtTimeStart" name="start" />&nbsp;-&nbsp;
+			<label for="txtTimeEnd">End:</label>&nbsp;<input type="text" id="txtTimeEnd" name="end" />
+			<input type="submit" value="Refresh" onclick="return refresh();" />
+		</form>
+	</div>
+
+
+    <noscript><b>JavaScript must be enabled in order for you to use Google Maps.</b> 
+      However, it seems JavaScript is either disabled or not supported by your browser. 
+      To view Google Maps, enable JavaScript by changing your browser options, and then 
+      try again.
+    </noscript>
+
+
+    <script type="text/javascript">
+
+    //<![CDATA[
+
+    if (GBrowserIsCompatible()) {
+      // this variable will collect the html which will eventualkly be placed in the side_bar
+      var side_bar_html = "";
+    
+      // arrays to hold copies of the markers used by the side_bar
+      // because the function closure trick doesnt work there
+      var gmarkers = [];
+      var i = 0;
+
+      // A function to create the marker and set up the event window
+      function createMarker(point,name,html) {
+        var marker = new GMarker(point, new GIcon(G_DEFAULT_ICON, "images/bluecircle.png"));
+        GEvent.addListener(marker, "click", function() {
+          marker.openInfoWindowHtml(html);
+        });
+        // save the info we need to use later for the side_bar
+        gmarkers[i] = marker;
+        // add a line to the side_bar html
+        side_bar_html += '<a href="javascript:myclick(' + i + ')">' + name + '</a><br>';
+        i++;
+        return marker;
+      }
+
+
+      // This function picks up the click and opens the corresponding info window
+      function myclick(i) {
+        GEvent.trigger(gmarkers[i], "click");
+      }
+
+	// create the map with controls (zoom, etc)
+	var map = new GMap2(document.getElementById("map"));
+	map.addControl(new GLargeMapControl());
+	map.addControl(new GMapTypeControl());
+
+	/* set default center and zoom */
+	map.setCenter(new GLatLng(33.776474, -84.397318), 14);
+
+	/* add a listener to the "zooming" function so can monitor when they zoom in/out */
+	GEvent.addListener(map, "zoomend", function() { refresh() });
+
+	<!-- THIS IS THE IMPORTANT AJAXy PART  -->
+
+	/* send request to our PHP AJAX page to get zoom/start/end */
+	function sendRequest(zoom, start, end) {
+
+		/* use GMap's awesome AJAX wrapper */
+		var request = GXmlHttp.create();
+
+		/* construct URL we'll be pinging with zoom/start/end */
+		var url = "markers.php?start=" + start + "&end=" + end;
+
+		/* set HTTP-type, URL, ?something? of request */
+		request.open("GET", url, true);
+
+		/* define function to execute after receiving info from PHP script */
+		request.onreadystatechange = function() {
+			if (request.readyState == 4) {
+				/* reset the side-bar info */
+				side_bar_html = '';
+
+				var xmlDoc = GXml.parse(request.responseText);
+				/* parse incoming XML doc and obtain "marker" elements */
+				var markers = xmlDoc.documentElement.getElementsByTagName("marker");
+	          
+				/* loop through and get attributes of "marker" */
+				for (var i = 0; i < markers.length; i++) {
+					/* create new GPoint (GLatLng) from marker's latlong info */
+					var lat = parseFloat(markers[i].getAttribute("lat"));
+					var lng = parseFloat(markers[i].getAttribute("lng"));
+					var point = new GLatLng(lat,lng);
+
+					/* get side-view HTML content for "marker" */
+					var html = markers[i].getAttribute("html");
+
+					/* get popup-label content for "marker" */
+					var label = markers[i].getAttribute("label");
+
+					/* use function to create new GMap marker given element's info */
+					var marker = createMarker(point,label,html);
+
+					/* add new GMap marker to map */
+					map.addOverlay(marker);
+				}
+
+				/* add "marker"s info to side_bar for easy browse-click */
+				document.getElementById("side_bar").innerHTML = side_bar_html;
+			}
+		}
+		/* send off AJAX request we've constructed */
+		request.send(null);
+
+		return false;
+
+	}
+
+	<!-- END IMPORTANT AJAXy PART -->
+
+	/* called by any DHTML element that necessitates a change */
+	function refresh() {
+		return sendRequest(getZoom(), getStart(), getEnd());
+	}
+
+	/* get the start-time */
+	function getStart() {
+		return document.getElementById('txtTimeStart').value;
+	}
+
+	/* get the end-time */
+	function getEnd() {
+		return document.getElementById('txtTimeEnd').value;
+	}
+
+	/* get the current zoom */
+	function getZoom() {
+		return map.getZoom();
+	}
+
+	/* render our map for the first time */
+	refresh();
+
+    } else {
+      alert("Sorry, the Google Maps API is not compatible with this browser");
+    }
+
+    // Copyright information ----------------------------
+    // This Javascript is based on code provided by the
+    // Blackpool Community Church Javascript Team
+    // http://www.commchurch.freeserve.co.uk/   
+    // http://econym.googlepages.com/index.htm
+    // ------------------------ End copyright information
+
+    //]]>
+    </script>
+
+  </body>
+
+</html>
+
+
+
+
+
