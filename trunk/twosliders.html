@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+		<title>Using Images to Spruce Up a Slider Demo</title>
+		<script src="javascripts/prototype.js" type="text/javascript"></script>
+		<script src="javascripts/slider.js" type="text/javascript"></script>
+		<style type="text/css" media="screen" >
+			
+			/* put the track and the right rounded edge on the track */
+			#track {
+				background: transparent url(images/slider-images-track.png) repeat-x top left;
+			}
+
+			.handle {
+				width: 19px; height: 20px;
+				float: left;
+			}
+
+		</style>
+
+	</head>
+	<body>
+		<div id="track" style="width:500px; height:9px;">
+			<div id="handle1" class="handle"><img src="images/slider-images-handle.png" /></div>
+			<div id="handle2" class="handle"><img src="images/slider-images-handle.png" /></div>
+		</div>
+
+
+		<br /><br />
+
+		<p id="date_range">&nbsp;</p>
+		<p id="status">&nbsp;</p>
+
+		<script type="text/javascript" language="javascript">
+		// <![CDATA[
+
+			var num_dates = 10;
+			var dates = ['2007-10-24', '2007-10-25', '2007-10-26', '2007-10-27', '2007-10-28', '2007-10-29', '2007-10-30', '2007-10-31', '2007-11-01', '2007-11-02', '2007-11-03'];
+
+			var handles = [$('handle1'), $('handle2')];
+			var values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+			// horizontal slider control left
+			new Control.Slider(handles, 'track', 
+				{
+				range: $R(0,num_dates, false),
+				sliderValue: [0, num_dates], // First handle at earliest date (0), 2nd at max date (num_dates)
+				restricted:true,
+				strict: true,
+				values: values,
+				step: 1,
+				onSlide: function(v) { $('date_range').innerHTML = dateFor(v) },
+				onChange: function(v) { $('status').innerHTML = 'Sending request...' }
+				}
+			);
+
+			function dateFor(v) {
+				return dates[v[0]] + ' through ' + dates[v[1]];
+			}
+
+
+		// ]]>
+		</script>
+	
+		</script>
+	</body>
+</html>
+
