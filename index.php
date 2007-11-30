@@ -130,6 +130,9 @@
 				/* reset the side-bar info */
 				side_bar_html = '';
 
+				/* clear all the markers currently on the map */
+				map.clearOverlays();
+
 				var xmlDoc = GXml.parse(request.responseText);
 				/* parse incoming XML doc and obtain "marker" elements */
 				var markers = xmlDoc.documentElement.getElementsByTagName("marker");
