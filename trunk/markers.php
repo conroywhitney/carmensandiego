@@ -1,9 +1,11 @@
+<?php require("mysqlpass.php"); ?>
+
 <markers>
 <?php
 	/* take qsvars to use in query */
 	$zoom = $_GET["zoom"]; $start = $_GET["start"]; $end = $_GET["end"];
 
-	$db = new mysqli("localhost", "root", "blackbag", "4440");
+	$db = new mysqli("localhost", "root", $mysql_password, "4440");
 	$query = "SELECT * FROM images WHERE '1'"; 
 	$result = $db->query($query);
 ?>
