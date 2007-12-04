@@ -1,6 +1,7 @@
 <?php require("ignore/mysqlpass.php"); ?>
-
-<markers>
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+  <Document>
 <?php
 	/* take qsvars to use in query */
 	$start = $_GET["start"] ? $_GET["start"] : gmdate("Y-m-d", time());
@@ -15,14 +16,22 @@
 	if ($result = $db->query($query)) {
 		while($row = $result->fetch_assoc()) {
 ?>
-			<marker lat="<?php echo $row['y']; ?>" lng="<?php echo $row['x']; ?>" 
-				html="Filename <?php echo $row['filename']; ?>
-					&lt;br&gt;Location: <?php echo $row['x']; ?>, <?php echo $row['y']; ?>
-					&lt;br&gt;Taken at: <?php echo $row['taken_at']; ?>"
-				label="<?php echo $row['filename']; ?>" />
-<?
+<Placemark>
+	<name><?php echo $row['filename']; ?></name>
+	<description>
+        <![CDATA[
+		Filename <?php echo $row['filename']; ?><br />
+		Location: <?php echo $row['x']; ?>, <?php echo $row['y']; ?><br />
+		Taken at: <?php echo $row['taken_at']; ?>
+        ]]>
+	</description>
+	<Point>
+		<coordinates><?php echo $row['x']; ?>,<?php echo $row['y']; ?>,0</coordinates>
+	</Point>
+</Placemark>
+<?php
 		}
 	}
 ?>
-
-</markers> 
+  </Document>
+</kml>

@@ -11,7 +11,7 @@
 	/* create MySQLi obj */
 	$db = new mysqli("localhost", "root", $mysql_password, "4440");
 
-	$query = "SELECT MIN(taken_at) AS min_dt, MAX(taken_at) AS max_dt, COUNT(DISTINCT taken_at) AS num_dates FROM images";
+	$query = "SELECT MIN(taken_at) AS min_dt, MAX(taken_at) AS max_dt, COUNT(DISTINCT CAST(taken_at AS DATE)) AS num_dates FROM images";
 	if ($result = $db->query($query)) {
 		if ($row = $result->fetch_assoc()) {
 			$min_dt = $row['min_dt'];
@@ -30,7 +30,7 @@
 		}
 	}
 
-	$query = "SELECT DISTINCT taken_at AS date FROM images ORDER BY taken_at ASC";
+	$query = "SELECT DISTINCT CAST(taken_at AS DATE) AS date FROM images ORDER BY taken_at ASC";
 	$date_arr = array();
 	if ($result = $db->query($query)) {
 		if ($result->num_rows > 0) {
