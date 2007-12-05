@@ -2,6 +2,11 @@
 
 <markers>
 <?php
+
+	function format_date($d) {
+		return date("g:ia M j 'y", strtotime($d));
+	}
+
 	/* take qsvars to use in query */
 	$start = $_GET["start"] ? $_GET["start"] : gmdate("Y-m-d", time());
 	$end = $_GET["end"] ? $_GET["end"] : gmdate("Y-m-d", time());
@@ -16,11 +21,10 @@
 		while($row = $result->fetch_assoc()) {
 ?>
 			<marker lat="<?php echo $row['y']; ?>" lng="<?php echo $row['x']; ?>" 
-				html="Filename <?php echo $row['filename']; ?>
-					&lt;br&gt;Location: <?php echo $row['x']; ?>, <?php echo $row['y']; ?>
-					&lt;br&gt;Taken at: <?php echo $row['taken_at']; ?>"
+				html="&lt;img src=&quot;images/demo/<?php echo $row['filename']; ?>&quot; width=&quot;200&quot; /&gt;
+					&lt;br&gt;Taken at: <?php echo format_date($row['taken_at']); ?>"
 				label="<?php echo $row['filename']; ?>" />
-<?
+<?php
 		}
 	}
 ?>
