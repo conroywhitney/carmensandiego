@@ -1,1 +1,1 @@
-<?php $mysql_password = ""; ?>
+<?php $mysql_password = "blackbag"; ?>
