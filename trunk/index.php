@@ -23,6 +23,9 @@
 			width: 19px; height: 20px;
 			float: left;
 		}
+		#side_bar {
+			line-height: 80%;
+		}
 	</style>
   </head>
 
@@ -35,7 +38,7 @@
 			<div id="map" style="width: 800px; height: 600px"></div>
 		</td>
 		<td width = 150 valign="top" style="text-decoration: underline; color: #4444ff;">
-			<div id="side_bar"></div>
+			<div id="side_bar" style="height: 600px; width: 250px; overflow: auto"></div>
 		</td>
 	</tr>
 	</table>
@@ -48,9 +51,9 @@
 		<div id="handle2" class="handle"><img src="images/slider-images-handle.png" /></div>
 	</div>
 
-	<br /><br />
+	<br />
 
-	<p id="date_range">&nbsp;</p>
+	<p id="date_range"><?php echo $min_date; ?> through <?php echo $max_date; ?></p>
 	<p id="status">&nbsp;</p>
 
 </center>
@@ -76,8 +79,8 @@
       var i = 0;
 
 	/* Set up initial start/end dates; these will change with slider */
-	var start_date = '2007-10-24';
-	var end_date = '2007-11-03';
+	var start_date = '<?php echo $min_date; ?>';
+	var end_date = '<?php echo $max_date; ?>';
 
       // A function to create the marker and set up the event window
       function createMarker(point,name,html) {
@@ -158,7 +161,7 @@
 				}
 
 				/* add "marker"s info to side_bar for easy browse-click */
-				document.getElementById("side_bar").innerHTML = side_bar_html;
+				document.getElementById("side_bar").innerHTML = '<ul>' + side_bar_html + '</ul>';
 
 				/* update status div */
 				$('status').innerHTML = "";
