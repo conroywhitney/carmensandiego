@@ -6,7 +6,7 @@
     <title>GATech CS4440 - Carmen Sandiego</title>
 
     <!-- Set up the GMap -->
-    <script src="http://maps.google.com/maps?file=api&v=1&key=ABQIAAAAIgEnb51u7ki0ktkbQ_DXtRQJKXadkVFadm4-UfJVkAKqFFfaphRfhRfd2EWZRN1_8j0YKTCATAcaZw" type="text/javascript">
+    <script src="http://maps.google.com/maps?file=api&v=1&key=ABQIAAAAFZtAt1faYiXlDfkUEP-iVRS8ewY-I6_csZPw9RwV-6NNCZKMixRCNBt5R5ra-AOlWAVae1xSuR5Tww" type="text/javascript">
     </script>
 
 	<!-- Prototype for Sliders -->
