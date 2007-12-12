@@ -1,0 +1,13 @@
+bin\Debug\GPSSyncher.exe
+bin\Debug\GPSSyncher.pdb
+bin\Debug\GPSSyncher.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\GPSSyncher.ImportGPSForm.resources
+obj\Debug\GPSSyncher.MainForm.resources
+obj\Debug\GPSSyncher.Resources.resources
+obj\Debug\GPSSyncher.vbproj.GenerateResource.Cache
+obj\Debug\GPSSyncher.exe
+obj\Debug\GPSSyncher.xml
+obj\Debug\GPSSyncher.pdb
+obj\Debug\GPSSyncher.GPSPointsForm.resources
+obj\Debug\GPSSyncher.PicturesForm.resources
