@@ -1,0 +1,1 @@
+Syncing digital images from a camera with a GPS device to provide lat-long information. Overlaying those images on a GMap and allowing selection of a time interval.
